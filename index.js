@@ -40,7 +40,7 @@ app.post('/send-notification', async (req, res) => {
 app.post('/send-underframe-notification', async (req, res) => {
   const { trainSet, location, engineers } = req.body;
 
-  if (!trainSet || !line || !Array.isArray(engineers)) {
+  if (!trainSet || !location || !Array.isArray(engineers)) {
     return res.status(400).json({ error: 'Invalid payload' });
   }
 
@@ -60,6 +60,7 @@ app.post('/send-underframe-notification', async (req, res) => {
     return res.status(500).json({ success: false, error: e.message });
   }
 });
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
