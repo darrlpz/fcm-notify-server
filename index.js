@@ -23,7 +23,7 @@ app.post('/send-notification', async (req, res) => {
   const message = {
     topic: 'all_users',
     notification: {
-      title: `TS#${trainSet} inspection done`,
+      title: `TS#${trainSet} mainline inspection done`,
       body: `by ${engineers.join(', ')} on ${line} Line`,
     }
   };
@@ -41,26 +41,25 @@ app.post('/send-underframe-notification', async (req, res) => {
   const { trainSet, location, engineers } = req.body;
 
   if (!trainSet || !location || !Array.isArray(engineers)) {
-    return res.status(400).json({ error: 'Invalid payload' });
+    return res.status(400).json({ error: 'Invalid request payload' });
   }
 
   const message = {
     topic: 'all_users',
     notification: {
       title: `TS#${trainSet} underframe inspection done`,
-      body: `by ${engineers.join(', ')} at ${location}`
+      body: `by ${engineers.join(', ')} at ${location}`,
     }
   };
 
   try {
-    const msgId = await admin.messaging().send(message);
-    return res.status(200).json({ success: true, messageId: msgId });
-  } catch (e) {
-    console.error('FCM Error:', e);
-    return res.status(500).json({ success: false, error: e.message });
+    const response = await admin.messaging().send(message);
+    res.status(200).json({ success: true, messageId: response });
+  } catch (error) {
+    console.error('FCM Error:', error);
+    res.status(500).json({ success: false, error: error.message });
   }
 });
-
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
