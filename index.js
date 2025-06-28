@@ -23,7 +23,7 @@ app.post('/send-notification', async (req, res) => {
   const message = {
     topic: 'all_users',
     notification: {
-      title: `TS#${trainSet} mainline inspection done`,
+      title: `TS#${trainSet} Mainline Inspection done`,
       body: `by ${engineers.join(', ')} on ${line} Line`,
     }
   };
@@ -47,7 +47,7 @@ app.post('/send-underframe-notification', async (req, res) => {
   const message = {
     topic: 'all_users',
     notification: {
-      title: `TS#${trainSet} underframe inspection done`,
+      title: `TS#${trainSet} Underframe Inspection done`,
       body: `by ${engineers.join(', ')} at ${location}`,
     }
   };
